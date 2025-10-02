@@ -1,10 +1,5 @@
 import streamlit as st
 
-st.title("🎈 My new app")
-st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
-
 # 삼각형 각 변 입력
 st.header("삼각형 변 입력 및 피타고라스 정리 풀이")
 a = st.number_input("변 a", min_value=1, step=1, format="%d")
@@ -54,10 +49,16 @@ def pythagoras_explain(a, b, c):
     st.write(f"가장 긴 변: {c_}, 나머지: {a_}, {b_}")
     st.latex(f"{a_}^2 + {b_}^2 = {a_**2:.2f} + {b_**2:.2f} = {a_**2 + b_**2:.2f}")
     st.latex(f"{c_}^2 = {c_**2:.2f}")
+    # 등호/부등호 판정
     if np.isclose(a_**2 + b_**2, c_**2):
+        st.latex(f"{a_}^2 + {b_}^2 = {c_}^2")
         st.success("피타고라스 정리가 성립합니다. 직각삼각형입니다.")
+    elif a_**2 + b_**2 > c_**2:
+        st.latex(f"{a_}^2 + {b_}^2 > {c_}^2")
+        st.info("두 짧은 변의 제곱의 합이 가장 긴 변의 제곱보다 크므로 둔각삼각형입니다.")
     else:
-        st.warning("피타고라스 정리가 성립하지 않습니다. 직각삼각형이 아닙니다.")
+        st.latex(f"{a_}^2 + {b_}^2 < {c_}^2")
+        st.info("두 짧은 변의 제곱의 합이 가장 긴 변의 제곱보다 작으므로 예각삼각형입니다.")
 
 if a > 0 and b > 0 and c > 0:
     draw_triangle(a, b, c)
